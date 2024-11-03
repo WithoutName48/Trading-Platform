@@ -1,0 +1,71 @@
+# Ignore object files, binaries, and libraries
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+
+# Ignore build directories (often used for out-of-source builds)
+build/
+cmake-build-debug/
+cmake-build-release/
+
+# Ignore dependency directories
+/deps/
+/vendor/
+
+# Ignore compiled and generated files
+*.class
+*.gch
+*.pyc
+
+# Ignore CMake-generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Ignore IDE and editor-specific files
+# Visual Studio Code
+.vscode/
+# CLion
+.idea/
+cmake-build-*/
+# Eclipse
+.project
+.cproject
+# Xcode
+*.xcodeproj
+*.xcworkspace
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# Ignore backups
+*~
+*.bak
+
+# Ignore debug and profiling files
+*.dSYM/
+*.prof
+*.gcda
+*.gcno
+*.gcov
+
+# Ignore archives
+*.tar
+*.gz
+*.zip
+*.rar
+*.7z
