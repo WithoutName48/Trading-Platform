@@ -1,0 +1,35 @@
+# === Node Modules ===
+node_modules/
+**/node_modules/
+
+# === Environment Files ===
+.env
+.env.*     # Optional: if you use .env.development, etc.
+
+# === Logs ===
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === Vite Cache ===
+client/.vite/
+
+# === TypeScript ===
+*.tsbuildinfo
+
+# === Coverage ===
+coverage/
+
+# === IDEs / Editors ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Misc ===
+*.log
+*.local
