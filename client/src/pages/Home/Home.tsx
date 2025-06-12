@@ -4,8 +4,8 @@ import Chart from './components/chart/Chart';
 const Home = () => {  
   const listTickerSymbols: string[] = [
     'BTC/USD',
-    'AUX/USD',
-    'EUR/USD'
+    // 'XAU/USD',
+    // 'EUR/USD'
   ]
 
   return (

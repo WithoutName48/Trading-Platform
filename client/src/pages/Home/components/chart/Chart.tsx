@@ -33,7 +33,7 @@ function Chart(props: any) {
 
     ws.onmessage = (event: MessageEvent) => {
       const msgJSON: CryptoPriceUpdate = JSON.parse(event.data);
-      setPrices(prevPrices => [...prevPrices, msgJSON]);
+      //setPrices(prevPrices => [...prevPrices, msgJSON]);
     };
 
     return () => {
@@ -41,19 +41,16 @@ function Chart(props: any) {
     };
   }, []);
 
-  const liPrices = prices.map((val: CryptoPriceUpdate, indx: number) => {
-    return (
-      <li key={indx}>{`${formatDatePoland(val.date)}: ${val.price}$`}</li>
-    );
-  });
+  // const liPrices = prices.map((val: CryptoPriceUpdate, indx: number) => {
+  //   return (
+  //     <li key={indx}>{`${formatDatePoland(val.date)}: ${val.price}$`}</li>
+  //   );
+  // });
 
   return (
-    <div className={styles.container}>
-      <h1>Dashboard for: {tickerSymbol}</h1>
-      <ul>
-        {liPrices}
-      </ul>
-    </div>
+    <canvas id={`canvas-${tickerSymbol}`} width={600} height={400}>
+      Current price of a {tickerSymbol} is 0$.
+    </canvas>
   );
 }
 

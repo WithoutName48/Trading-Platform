@@ -9,8 +9,12 @@ const app = express();
 const portREST: number = 8001;
 const portWS: number = 8002;
 
-const urlCryptoAPI: string = `wss://ws.twelvedata.com/v1/quotes/price?apikey=${process.env.TWELVE_DATA_API_KEY}`;
-let wsCryptoAPI: WebSocket;
+const urlRESTAPI: string = `https://api.twelvedata.com/time_series?apikey=${process.env.TWELVE_DATA_API_KEY}&interval=1min&symbol=BTC/USD&start_date=2025-06-12 20:06:00&format=JSON&end_date=2025-06-12 23:06:00&timezone=Europe/Warsaw`;
+
+app.get('/getData', (req: Request, res: Response) => {});
+
+const urlWebSocketAPI: string = `wss://ws.twelvedata.com/v1/quotes/price?apikey=${process.env.TWELVE_DATA_API_KEY}`;
+let WebSocketAPI: WebSocket;
 
 const clientIdTickerSymbol: Map<string, string> = new Map<string, string>();
 const tickerSymbolWS: Map<string, WebSocket> = new Map<string, WebSocket>();
@@ -20,8 +24,8 @@ interface wsClientMessage {
   params: string;
 }
 
-function setUpWSCryptoAPIHandlers(wsCryptoAPI: WebSocket) {
-  wsCryptoAPI.on('open', () => {
+function setUpWebSocketAPIHandlers(WebSocketAPI: WebSocket) {
+  WebSocketAPI.on('open', () => {
     // Authentication via API_KEY in url
 
     // Subscribtion
@@ -34,11 +38,11 @@ function setUpWSCryptoAPIHandlers(wsCryptoAPI: WebSocket) {
       },
     };
 
-    wsCryptoAPI.send(JSON.stringify(subscribeMsg));
+    WebSocketAPI.send(JSON.stringify(subscribeMsg));
   });
 
   // Handle messages from crypto API
-  wsCryptoAPI.on('message', (message: string) => {
+  WebSocketAPI.on('message', (message: string) => {
     const messageJSON = JSON.parse(message);
 
     if (messageJSON.event === 'price') {
@@ -58,27 +62,27 @@ function setUpWSCryptoAPIHandlers(wsCryptoAPI: WebSocket) {
     }
   });
 
-  wsCryptoAPI.on('error', (error: Error) => {
+  WebSocketAPI.on('error', (error: Error) => {
     console.error(`wsCrpytoAPI error: ${error}`);
   });
 
-  wsCryptoAPI.on('close', () => {
-    console.log('wsCryptoAPI closed.');
+  WebSocketAPI.on('close', () => {
+    console.log('WebSocketAPI closed.');
   });
 }
 
 function openWebSocketCryptoAPI() {
-  if (wsCryptoAPI && wsCryptoAPI.readyState === wsCryptoAPI.OPEN) {
-    wsCryptoAPI.on('close', () => {
-      wsCryptoAPI = new WebSocket(urlCryptoAPI);
-      setUpWSCryptoAPIHandlers(wsCryptoAPI);
+  if (WebSocketAPI && WebSocketAPI.readyState === WebSocketAPI.OPEN) {
+    WebSocketAPI.on('close', () => {
+      WebSocketAPI = new WebSocket(urlWebSocketAPI);
+      setUpWebSocketAPIHandlers(WebSocketAPI);
     });
-    wsCryptoAPI.close();
+    WebSocketAPI.close();
     return;
   }
 
-  wsCryptoAPI = new WebSocket(urlCryptoAPI);
-  setUpWSCryptoAPIHandlers(wsCryptoAPI);
+  WebSocketAPI = new WebSocket(urlWebSocketAPI);
+  setUpWebSocketAPIHandlers(WebSocketAPI);
 }
 
 function openWebSocketServer(portWS: number) {
